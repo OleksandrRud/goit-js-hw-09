@@ -31,7 +31,7 @@ const options = {
 const fp = flatpickr(myInput, options);
 
 const startCountdown = () => {
-  timerId = setInterval(() => {
+  const timerId = setInterval(() => {
     let delta = targetDate - Date.now();
     function convertMs(ms) {
       const second = 1000;

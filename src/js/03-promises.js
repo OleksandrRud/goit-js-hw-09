@@ -39,7 +39,7 @@ function createPromise(position, delay) {
 
 function start(event) {
   event.preventDefault();
-  interval = setInterval(() => {
+  const interval = setInterval(() => {
     positionByPromise += 1;
     createPromise(positionByPromise, noteFromFieldDelay)
       .then(({ position, delay }) => {
@@ -56,6 +56,7 @@ function start(event) {
       clearInterval(interval);
       positionByPromise = 0;
     }
+    console.log(noteFromFieldAmount);
     noteFromFieldDelay += noteFromFieldStep;
   }, noteFromFieldStep);
 }
