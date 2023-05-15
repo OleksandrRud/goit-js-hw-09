@@ -2,9 +2,9 @@ import Notiflix from 'notiflix';
 
 const refs = {
   form: document.querySelector('.form'),
-  delay: document.querySelector('[name="delay"]'),
-  step: document.querySelector('[name="step"]'),
-  amount: document.querySelector('[name="amount"]'),
+  // delay: document.querySelector('[name="delay"]'),
+  // step: document.querySelector('[name="step"]'),
+  // amount: document.querySelector('[name="amount"]'),
   button: document.querySelector('button'),
 };
 
@@ -15,13 +15,17 @@ let noteFromFieldDelay = 0;
 let noteFromFieldStep = 0;
 let noteFromFieldAmount = 0;
 
-function handleForm({ target }) {
-  if (target === refs.step) {
-    noteFromFieldStep = Number(target.value);
-  } else if (target === refs.delay) {
-    noteFromFieldDelay = Number(target.value);
-  } else target === refs.amount;
-  noteFromFieldAmount = Number(target.value);
+function handleForm(e) {
+  noteFromFieldDelay = Number(e.currentTarget.elements.delay.value);
+  noteFromFieldStep = Number(e.currentTarget.elements.step.value);
+  noteFromFieldAmount = Number(e.currentTarget.elements.amount.value);
+
+  // if (target === refs.step) {
+  //   noteFromFieldStep = Number(target.value);
+  // } else if (target === refs.delay) {
+  //   noteFromFieldDelay = Number(target.value);
+  // } else target === refs.amount;
+  // noteFromFieldAmount = Number(target.value);
 }
 
 function createPromise(position, delay) {
