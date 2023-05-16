@@ -2,30 +2,20 @@ import Notiflix from 'notiflix';
 
 const refs = {
   form: document.querySelector('.form'),
-  // delay: document.querySelector('[name="delay"]'),
-  // step: document.querySelector('[name="step"]'),
-  // amount: document.querySelector('[name="amount"]'),
   button: document.querySelector('button'),
 };
 
 refs.form.addEventListener('input', handleForm);
 
-let positionByPromise = 0;
-let noteFromFieldDelay = 0;
-let noteFromFieldStep = 0;
-let noteFromFieldAmount = 0;
+let positionOfPromise = 0;
+let firstDelay = 0;
+let step = 0;
+let amount = 0;
 
 function handleForm(e) {
-  noteFromFieldDelay = Number(e.currentTarget.elements.delay.value);
-  noteFromFieldStep = Number(e.currentTarget.elements.step.value);
-  noteFromFieldAmount = Number(e.currentTarget.elements.amount.value);
-
-  // if (target === refs.step) {
-  //   noteFromFieldStep = Number(target.value);
-  // } else if (target === refs.delay) {
-  //   noteFromFieldDelay = Number(target.value);
-  // } else target === refs.amount;
-  // noteFromFieldAmount = Number(target.value);
+  firstDelay = Number(e.currentTarget.elements.delay.value);
+  step = Number(e.currentTarget.elements.step.value);
+  amount = Number(e.currentTarget.elements.amount.value);
 }
 
 function createPromise(position, delay) {
@@ -37,15 +27,15 @@ function createPromise(position, delay) {
       } else {
         reject({ position, delay });
       }
-    }, noteFromFieldDelay);
+    }, firstDelay);
   });
 }
 
 function start(event) {
   event.preventDefault();
   const interval = setInterval(() => {
-    positionByPromise += 1;
-    createPromise(positionByPromise, noteFromFieldDelay)
+    positionOfPromise += 1;
+    createPromise(positionOfPromise, firstDelay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(
           `✅ Fulfilled promise ${position} in ${delay}ms`
@@ -56,13 +46,13 @@ function start(event) {
           `❌ Rejected promise ${position} in ${delay}ms`
         );
       });
-    if (positionByPromise === noteFromFieldAmount) {
+    if (positionOfPromise === amount) {
       clearInterval(interval);
-      positionByPromise = 0;
+      positionOfPromise = 0;
+      firstDelay = firstDelay - step * amount;
     }
-    console.log(noteFromFieldAmount);
-    noteFromFieldDelay += noteFromFieldStep;
-  }, noteFromFieldStep);
+    firstDelay += step;
+  }, step);
 }
 
 refs.form.addEventListener('submit', start);
