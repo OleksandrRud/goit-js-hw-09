@@ -7,8 +7,7 @@ function getRandomHexColor() {
 }
 
 function startChangingColol() {
-  btnStart.setAttribute('disabled', '');
-  btnStop.removeAttribute('disabled');
+  changingColol(btnStart, btnStop);
 
   const intervalId = setInterval(() => {
     const color = getRandomHexColor();
@@ -16,12 +15,16 @@ function startChangingColol() {
   }, 1000);
 
   function stopChangingColol() {
-    btnStop.setAttribute('disabled', '');
-    btnStart.removeAttribute('disabled');
+    changingColol(btnStop, btnStart);
     clearInterval(intervalId);
   }
 
   btnStop.addEventListener('click', stopChangingColol);
+}
+
+function changingColol(active, notActive) {
+  active.setAttribute('disabled', '');
+  notActive.removeAttribute('disabled');
 }
 
 btnStart.addEventListener('click', startChangingColol);
