@@ -7,13 +7,13 @@ const refs = {
 
 refs.form.addEventListener('input', handleForm);
 
-let positionOfPromise = 0;
-let firstDelay = 0;
+let delay = 0;
 let step = 0;
 let amount = 0;
+let firstDelay = 0;
 
 function handleForm(e) {
-  firstDelay = Number(e.currentTarget.elements.delay.value);
+  delay = Number(e.currentTarget.elements.delay.value);
   step = Number(e.currentTarget.elements.step.value);
   amount = Number(e.currentTarget.elements.amount.value);
 }
@@ -33,9 +33,10 @@ function createPromise(position, delay) {
 
 function start(event) {
   event.preventDefault();
-  const interval = setInterval(() => {
-    positionOfPromise += 1;
-    createPromise(positionOfPromise, firstDelay)
+
+  for (let i = 1; i <= amount; i += 1) {
+    firstDelay = delay;
+    createPromise(i, delay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(
           `✅ Fulfilled promise ${position} in ${delay}ms`
@@ -46,13 +47,7 @@ function start(event) {
           `❌ Rejected promise ${position} in ${delay}ms`
         );
       });
-    if (positionOfPromise === amount) {
-      clearInterval(interval);
-      positionOfPromise = 0;
-      firstDelay = firstDelay - step * amount;
-    }
-    firstDelay += step;
-  }, step);
-}
 
-refs.form.addEventListener('submit', start);
+    delay += step;
+  }
+}

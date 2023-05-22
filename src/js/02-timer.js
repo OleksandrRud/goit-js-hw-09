@@ -31,6 +31,7 @@ const options = {
 const fp = flatpickr(myInput, options);
 
 const startCountdown = () => {
+  button.setAttribute('disabled', '');
   const timerId = setInterval(() => {
     let delta = targetDate - Date.now();
     const valueOfCalendar = convertMs(delta);
