@@ -51,3 +51,5 @@ function start(event) {
     delay += step;
   }
 }
+
+refs.form.addEventListener('submit', start);
